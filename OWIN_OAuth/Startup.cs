@@ -14,22 +14,18 @@ namespace OWIN_OAuth
     {
         public void Configuration(IAppBuilder app)
         {
-            // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
-
             var option = new OAuthAuthorizationServerOptions();
             // 取得token的網址
             option.TokenEndpointPath = new PathString("/Token");
-            // token過期時間
+            // Token過期時間
             option.AccessTokenExpireTimeSpan = TimeSpan.FromDays(2);
             // 是否允許使用Http
             option.AllowInsecureHttp = true;
-            // 驗證使用者的Provider
+            // 驗證使用者的Provider可覆寫OAuthAuthorizationServerProvider自定義Provider
             option.Provider = new ApplicationAuthorizationServerProvider();
-
-            // 
+            // 使用AuthorizationServer
             app.UseOAuthAuthorizationServer(option);
-
-            //使用 Bearer 驗證
+            //使用Bearer驗證
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
         }
     }
